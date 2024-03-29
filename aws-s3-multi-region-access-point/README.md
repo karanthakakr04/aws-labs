@@ -15,10 +15,10 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
 1. Head to the S3 dashboard: [https://s3.console.aws.amazon.com/s3/buckets](https://s3.console.aws.amazon.com/s3/buckets)
 2. Click on **Create bucket**
 3. For the first bucket:
-   - Set the **Bucket Name** to `multi-region-demo-sydney`
+   - Set the **Bucket Name** to `multi-region-access-point-demo-sydney`
    - Set the **region** to `ap-southeast-2`
 4. For the second bucket:
-   - Set the **Bucket Name** to `multi-region-demo-canada`
+   - Set the **Bucket Name** to `multi-region-access-point-demo-canada`
    - Set the **region** to `ca-central-1`
 5. Under **Bucket Versioning**, select **Enable** for both buckets.
 6. Leave everything else as default and click **Create bucket**
