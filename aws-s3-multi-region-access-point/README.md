@@ -27,10 +27,10 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
 
 1. Head to the S3 dashboard: [https://s3.console.aws.amazon.com/s3/buckets](https://s3.console.aws.amazon.com/s3/buckets)
 2. Go to the **Multi-Region Access Points** page, and click **Create Multi-Region Access Point**
-3. ![screenshot-1]<img width="235" alt="screenshot-1" src="https://github.com/karanthakakr04/aws-labs/assets/17943347/f3dda330-1fc8-4d94-8681-871d97d596d1">
-4. Set the **Multi-Region Access Point name** to anything you like, these are not globally unique.
-5. Click **Add buckets**, select your two buckets, and click **Add buckets**.
-6. Leave everything else as default, and click **Create Multi-Region Access Point**
+![screenshot-1](https://github.com/karanthakakr04/aws-labs/assets/17943347/f3dda330-1fc8-4d94-8681-871d97d596d1)
+3. Set the **Multi-Region Access Point name** to anything you like, these are not globally unique.
+4. Click **Add buckets**, select your two buckets, and click **Add buckets**.
+5. Leave everything else as default, and click **Create Multi-Region Access Point**
    - **Note:** This process can take "up to" 24 hours, but in my testing, it took <15 minutes.
 
 ### Stage 3 - Setting up bucket replication
