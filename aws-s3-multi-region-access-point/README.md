@@ -41,7 +41,9 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
 1. Head to the S3 dashboard: [https://s3.console.aws.amazon.com/s3/buckets](https://s3.console.aws.amazon.com/s3/buckets)
 2. Go to the **Multi-Region Access Points** page, click on the access point that you created earlier, and go to the **Replication and failover** page.
 3. Under **Replication rules**, click on **Create replication rules**
+   ![screenshot-5](https://github.com/karanthakakr04/aws-labs/assets/17943347/1dcf9af9-fbcb-42c3-a693-20671cadbb34)
 4. Leave **Replicate objects among all specified buckets** selected, and check all of the buckets in this access point.
+   ![screenshot-6](https://github.com/karanthakakr04/aws-labs/assets/17943347/636a9139-efb0-4ff6-a8d9-f421e0bcbd28)
 5. Under **Scope** select **Apply to all objects in the bucket**
 6. Leave everything else as is, and click **Create replication rules**
    - We now have both buckets replicating to each other.
@@ -50,11 +52,13 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
 
 1. Head to the S3 dashboard: [https://s3.console.aws.amazon.com/s3/mraps](https://s3.console.aws.amazon.com/s3/mraps)
 2. Go to the **Multi-Region Access Points** page, select your access point, and click **Copy ARN**. We will need this for the next step.
-3. We're going to use the AWS CloudShell in the console to test this out, as it allows us to connect to S3 from different regions. If you connected from your local PC, you would always be routed to the closest bucket to your ISP.
+   ![screenshot-7]()
+4. We're going to use the AWS CloudShell in the console to test this out, as it allows us to connect to S3 from different regions. If you connected from your local PC, you would always be routed to the closest bucket to your ISP.
    - **Note:** CloudShell is not available in every region, see here for a list of available regions you can use: [https://docs.aws.amazon.com/general/latest/gr/cloudshell.html](https://docs.aws.amazon.com/general/latest/gr/cloudshell.html)
    - Be aware of the potential cost implications of using AWS CloudShell.
-4. Make sure you're in the region you want to connect from, and open up CloudShell
-5. In the CloudShell console, we'll create a 10MB file named `test1.file`, and upload it to the S3 MRAP ARN you copied earlier.
+5. Make sure you're in the region you want to connect from, and open up CloudShell.
+   ![screenshot-8]()
+7. In the CloudShell console, we'll create a 10MB file named `test1.file`, and upload it to the S3 MRAP ARN you copied earlier.
 
    ```bash
    dd if=/dev/urandom of=test1.file bs=1M count=10
@@ -63,10 +67,12 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
 
    - Replace `<MRAP_ARN>` with the actual ARN of your Multi-Region Access Point.
 
-6. Now, because I've done this from Tokyo, Sydney should be the closest bucket and should have the file. If we check the Canada bucket, it should already be replicated.
+8. Now, because I've done this from Tokyo, Sydney should be the closest bucket and should have the file. If we check the Canada bucket, it should already be replicated.
+   ![screenshot-9]()
+   ![screenshot-10]()
    - **Note:** S3 replication isn't guaranteed to complete in a set time. In fact, their documentation says it can take hours or longer. To get around this, you can enable Replication Time Control (RTC) which speeds up replication and advertises 99.99% of objects replicated within 15 minutes, and "most" objects replicated in seconds. This costs extra and isn't required for our demo.
 
-7. Let's switch to another region in CloudShell, in my case, I'm going to us Ohio (us-east-2). Again, run these two commands, changing the file name to `test2.file`:
+10. Let's switch to another region in CloudShell, in my case, I'm going to us Ohio (us-east-2). Again, run these two commands, changing the file name to `test2.file`:
 
    ```bash
    dd if=/dev/urandom of=test2.file bs=1M count=10
@@ -74,9 +80,12 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
    ```
 
    - Replace `<MRAP_ARN>` with the actual ARN of your Multi-Region Access Point.
+     ![screenshot-11]()
+     ![screenshot-12]()
 
-8. As another test, I'm going to pick a region as close to the center of both buckets as I can, and see which bucket receives the file first. In my case, this is Mumbai (ap-south-1).
+11. As another test, I'm going to pick a region as close to the center of both buckets as I can, and see which bucket receives the file first. In my case, this is Mumbai (ap-south-1).
    - **Note:** While Mumbai may geographically be close to the center, there are a lot of network factors behind the scenes which control which region is closest.
+     ![screenshot-13]()
 
    ```bash
    dd if=/dev/urandom of=test3.file bs=1M count=10
@@ -84,8 +93,10 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
    ```
 
    - Replace `<MRAP_ARN>` with the actual ARN of your Multi-Region Access Point.
+     ![screenshot-14]()
+     ![screenshot-15]()
 
-9. As a final test, we'll see what happens if we try to get an object, via our Multi-Region Access Point, that has been created in one bucket, but our 'get' request is routed to another bucket that has not had the file replicated yet.
+11. As a final test, we'll see what happens if we try to get an object, via our Multi-Region Access Point, that has been created in one bucket, but our 'get' request is routed to another bucket that has not had the file replicated yet.
    - To do this, you will need to have two CloudShell's open, one nearest to each bucket.
    - In one window, create a new file and upload it:
 
@@ -113,6 +124,7 @@ By following these cleanup steps, you will remove the Multi-Region Access Point 
    - Select the access point you created earlier.
    - Click on the **Delete** button to delete the access point.
    - **Note:** The deletion process may take a few minutes, and you might not be able to delete the associated buckets while the access point deletion is in progress.
+     ![screenshot-16]()
 
 2. Empty the S3 buckets:
    - Go to the S3 dashboard: [https://s3.console.aws.amazon.com/s3/buckets](https://s3.console.aws.amazon.com/s3/buckets)
@@ -122,6 +134,7 @@ By following these cleanup steps, you will remove the Multi-Region Access Point 
      - Click on the **Empty** button.
      - In the confirmation dialog, enter `permanently delete` to confirm the action.
      - Click on the **Empty** button to empty the bucket.
+       ![screenshot-17]()
 
 3. Delete the S3 buckets:
    - Once both buckets are empty, go back to the **Buckets** page.
@@ -131,6 +144,7 @@ By following these cleanup steps, you will remove the Multi-Region Access Point 
      - In the confirmation dialog, enter the bucket name to confirm the deletion.
      - Click on the **Delete** button to delete the bucket.
    - **Note:** Ensure that the bucket emptying process is complete before attempting to delete the buckets.
+     ![screenshot-18]()
 
 ## Conclusion
 
