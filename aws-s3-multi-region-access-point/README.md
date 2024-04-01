@@ -53,12 +53,12 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
 1. Head to the S3 dashboard: [https://s3.console.aws.amazon.com/s3/mraps](https://s3.console.aws.amazon.com/s3/mraps)
 2. Go to the **Multi-Region Access Points** page, select your access point, and click **Copy ARN**. We will need this for the next step.
    ![screenshot-7]()
-4. We're going to use the AWS CloudShell in the console to test this out, as it allows us to connect to S3 from different regions. If you connected from your local PC, you would always be routed to the closest bucket to your ISP.
+3. We're going to use the AWS CloudShell in the console to test this out, as it allows us to connect to S3 from different regions. If you connected from your local PC, you would always be routed to the closest bucket to your ISP.
    - **Note:** CloudShell is not available in every region, see here for a list of available regions you can use: [https://docs.aws.amazon.com/general/latest/gr/cloudshell.html](https://docs.aws.amazon.com/general/latest/gr/cloudshell.html)
    - Be aware of the potential cost implications of using AWS CloudShell.
-5. Make sure you're in the region you want to connect from, and open up CloudShell.
+4. Make sure you're in the region you want to connect from, and open up CloudShell.
    ![screenshot-8]()
-7. In the CloudShell console, we'll create a 10MB file named `test1.file`, and upload it to the S3 MRAP ARN you copied earlier.
+5. In the CloudShell console, we'll create a 10MB file named `test1.file`, and upload it to the S3 MRAP ARN you copied earlier.
 
    ```bash
    dd if=/dev/urandom of=test1.file bs=1M count=10
@@ -67,12 +67,12 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
 
    - Replace `<MRAP_ARN>` with the actual ARN of your Multi-Region Access Point.
 
-8. Now, because I've done this from Tokyo, Sydney should be the closest bucket and should have the file. If we check the Canada bucket, it should already be replicated.
+6. Now, because I've done this from Tokyo, Sydney should be the closest bucket and should have the file. If we check the Canada bucket, it should already be replicated.
    ![screenshot-9]()
    ![screenshot-10]()
    - **Note:** S3 replication isn't guaranteed to complete in a set time. In fact, their documentation says it can take hours or longer. To get around this, you can enable Replication Time Control (RTC) which speeds up replication and advertises 99.99% of objects replicated within 15 minutes, and "most" objects replicated in seconds. This costs extra and isn't required for our demo.
 
-10. Let's switch to another region in CloudShell, in my case, I'm going to us Ohio (us-east-2). Again, run these two commands, changing the file name to `test2.file`:
+7. Let's switch to another region in CloudShell, in my case, I'm going to us Ohio (us-east-2). Again, run these two commands, changing the file name to `test2.file`:
 
    ```bash
    dd if=/dev/urandom of=test2.file bs=1M count=10
@@ -80,39 +80,41 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
    ```
 
    - Replace `<MRAP_ARN>` with the actual ARN of your Multi-Region Access Point.
-     ![screenshot-11]()
-     ![screenshot-12]()
+      ![screenshot-11]()
+      ![screenshot-12]()
 
-11. As another test, I'm going to pick a region as close to the center of both buckets as I can, and see which bucket receives the file first. In my case, this is Mumbai (ap-south-1).
+8. As another test, I'm going to pick a region as close to the center of both buckets as I can, and see which bucket receives the file first. In my case, this is Mumbai (ap-south-1).
+
    - **Note:** While Mumbai may geographically be close to the center, there are a lot of network factors behind the scenes which control which region is closest.
-     ![screenshot-13]()
+      ![screenshot-13]()
 
-   ```bash
-   dd if=/dev/urandom of=test3.file bs=1M count=10
-   aws s3 cp test3.file s3://<MRAP_ARN>/
-   ```
+      ```bash
+      dd if=/dev/urandom of=test3.file bs=1M count=10
+      aws s3 cp test3.file s3://<MRAP_ARN>/
+      ```
 
    - Replace `<MRAP_ARN>` with the actual ARN of your Multi-Region Access Point.
-     ![screenshot-14]()
-     ![screenshot-15]()
+         ![screenshot-14]()
+         ![screenshot-15]()
 
-11. As a final test, we'll see what happens if we try to get an object, via our Multi-Region Access Point, that has been created in one bucket, but our 'get' request is routed to another bucket that has not had the file replicated yet.
-   - To do this, you will need to have two CloudShell's open, one nearest to each bucket.
-   - In one window, create a new file and upload it:
+9. As a final test, we'll see what happens if we try to get an object, via our Multi-Region Access Point, that has been created in one bucket, but our 'get' request is routed to another bucket that has not had the file replicated yet.
+
+- To do this, you will need to have two CloudShell's open, one nearest to each bucket.
+- In one window, create a new file and upload it:
 
      ```bash
      dd if=/dev/urandom of=test4.file bs=1M count=10
      aws s3 cp test4.file s3://<MRAP_ARN>/
      ```
 
-   - In another window, try to copy that file to your instance:
+- In another window, try to copy that file to your instance:
 
      ```bash
      aws s3 cp s3://<MRAP_ARN>/test4.file .
      ```
 
-   - If you're not quick enough, or replication is unusually fast, you might miss out, and should start again (with a new file name).
-   - **Note:** If your application requires all objects to be available immediately, Multi-Region Access Points may not be the best solution, or you should at least ensure your application can handle 404 errors.
+- If you're not quick enough, or replication is unusually fast, you might miss out, and should start again (with a new file name).
+- **Note:** If your application requires all objects to be available immediately, Multi-Region Access Points may not be the best solution, or you should at least ensure your application can handle 404 errors.
 
 ## Cleanup
 
