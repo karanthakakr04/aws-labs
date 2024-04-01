@@ -69,7 +69,6 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
 
 6. Now, because I've done this from Tokyo, Sydney should be the closest bucket and should have the file. If we check the Canada bucket, it should already be replicated.
    ![screenshot-9](https://github.com/karanthakakr04/aws-labs/assets/17943347/52fbb12e-0258-4f2c-9e0b-8e790ef2fc0e)
-
    ![screenshot-10](https://github.com/karanthakakr04/aws-labs/assets/17943347/1ee94a12-6481-4a8b-bc0c-37638d7f02bf)
 
    - **Note:** S3 replication isn't guaranteed to complete in a set time. In fact, their documentation says it can take hours or longer. To get around this, you can enable Replication Time Control (RTC) which speeds up replication and advertises 99.99% of objects replicated within 15 minutes, and "most" objects replicated in seconds. This costs extra and isn't required for our demo.
@@ -83,7 +82,6 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
 
    - Replace `<MRAP_ARN>` with the actual ARN of your Multi-Region Access Point.
       ![screenshot-11](https://github.com/karanthakakr04/aws-labs/assets/17943347/dccb155d-08b2-4948-bd0f-4c9e21bf678b)
-
       ![screenshot-12](https://github.com/karanthakakr04/aws-labs/assets/17943347/6973cb71-b812-47ec-a477-d74e9f3e79b2)
 
 8. As another test, I'm going to pick a region as close to the center of both buckets as I can, and see which bucket receives the file first. In my case, this is Mumbai (ap-south-1).
@@ -99,8 +97,7 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
 
    - Replace `<MRAP_ARN>` with the actual ARN of your Multi-Region Access Point.
          ![screenshot-14](https://github.com/karanthakakr04/aws-labs/assets/17943347/d0b40bdb-6bb6-4d7b-b852-3471bcb46cfd)
-
-         ![screenshot-15](https://github.com/karanthakakr04/aws-labs/assets/17943347/ded85087-e64f-4f55-9ae3-b9366e81d3f7)
+         ![screenshot-15](https://github.com/karanthakakr04/aws-labs/assets/17943347/b9dcdd88-617f-43e5-8681-28e2a51c32f7)
 
 9. As a final test, we'll see what happens if we try to get an object, via our Multi-Region Access Point, that has been created in one bucket, but our 'get' request is routed to another bucket that has not had the file replicated yet.
 
