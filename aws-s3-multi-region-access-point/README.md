@@ -131,7 +131,7 @@ By following these cleanup steps, you will remove the Multi-Region Access Point 
    - Select the access point you created earlier.
    - Click on the **Delete** button to delete the access point.
    - **Note:** The deletion process may take a few minutes, and you might not be able to delete the associated buckets while the access point deletion is in progress.
-     ![screenshot-16]()
+     ![screenshot-16](https://github.com/karanthakakr04/aws-labs/assets/17943347/6c8ac274-6597-432c-a7b3-eb0d2d46f2e3)
 
 2. Empty the S3 buckets:
    - Go to the S3 dashboard: [https://s3.console.aws.amazon.com/s3/buckets](https://s3.console.aws.amazon.com/s3/buckets)
@@ -141,7 +141,7 @@ By following these cleanup steps, you will remove the Multi-Region Access Point 
      - Click on the **Empty** button.
      - In the confirmation dialog, enter `permanently delete` to confirm the action.
      - Click on the **Empty** button to empty the bucket.
-       ![screenshot-17]()
+       ![screenshot-17](https://github.com/karanthakakr04/aws-labs/assets/17943347/813527ad-b4f6-4d40-8623-9f6a08b1df06)
 
 3. Delete the S3 buckets:
    - Once both buckets are empty, go back to the **Buckets** page.
@@ -151,7 +151,7 @@ By following these cleanup steps, you will remove the Multi-Region Access Point 
      - In the confirmation dialog, enter the bucket name to confirm the deletion.
      - Click on the **Delete** button to delete the bucket.
    - **Note:** Ensure that the bucket emptying process is complete before attempting to delete the buckets.
-     ![screenshot-18]()
+     ![screenshot-18](https://github.com/karanthakakr04/aws-labs/assets/17943347/349deff0-766a-49ae-9640-702e7b8c66e9)
 
 ## Conclusion
 
