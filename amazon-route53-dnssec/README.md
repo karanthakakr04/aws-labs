@@ -66,9 +66,9 @@ While DNSSEC doesn't encrypt DNS data or provide confidentiality, it significant
 
 Let's consider a scenario:
 
-1. Without DNSSEC: An attacker performs a cache poisoning attack on a DNS resolver, injecting false information for "bank.com". Users querying this resolver are directed to a fake website, potentially exposing their login credentials.
+1. Without DNSSEC: An attacker performs a cache poisoning attack on a DNS resolver, injecting false information for `bank.com`. Users querying this resolver are directed to a fake website, potentially exposing their login credentials.
 
-2. With DNSSEC: The same attack is attempted, but the DNSSEC-aware resolver checks the digital signature of the DNS records. It detects that the injected data isn't signed by the legitimate "bank.com" zone, rejects the false information, and protects users from the phishing attempt.
+2. With DNSSEC: The same attack is attempted, but the DNSSEC-aware resolver checks the digital signature of the DNS records. It detects that the injected data isn't signed by the legitimate `bank.com` zone, rejects the false information, and protects users from the phishing attempt.
 
 ### Limitations and Challenges
 
