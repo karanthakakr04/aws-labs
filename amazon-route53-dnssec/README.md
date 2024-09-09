@@ -62,6 +62,27 @@ In a DNSSEC-enabled system:
 
 While DNSSEC doesn't encrypt DNS data or provide confidentiality, it significantly enhances the trustworthiness of the DNS system. By implementing DNSSEC, domain owners can protect their users from various DNS-based attacks, including cache poisoning and man-in-the-middle attacks, thereby contributing to a more secure and reliable internet infrastructure.
 
+### Concrete Example
+
+Let's consider a scenario:
+
+1. Without DNSSEC: An attacker performs a cache poisoning attack on a DNS resolver, injecting false information for "bank.com". Users querying this resolver are directed to a fake website, potentially exposing their login credentials.
+
+2. With DNSSEC: The same attack is attempted, but the DNSSEC-aware resolver checks the digital signature of the DNS records. It detects that the injected data isn't signed by the legitimate "bank.com" zone, rejects the false information, and protects users from the phishing attempt.
+
+### Limitations and Challenges
+
+While DNSSEC significantly enhances DNS security, it's important to be aware of some challenges:
+
+1. Increased complexity in DNS management
+2. Larger DNS responses, which can sometimes lead to performance issues
+3. Potential for amplification attacks if not properly implemented
+4. Requires widespread adoption to reach its full potential
+
+Despite these challenges, the security benefits of DNSSEC generally outweigh the drawbacks for most organizations.
+
+In the next section, we'll delve deeper into how DNSSEC works, exploring the mechanics of DNS record signing and validation.
+
 ## How DNSSEC Works
 
 ### DNSSEC within a Zone
