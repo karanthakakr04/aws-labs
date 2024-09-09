@@ -48,7 +48,7 @@ Domain Name System Security Extensions (DNSSEC) addresses critical security vuln
 
 DNSSEC addresses these issues by providing two crucial improvements:
 
-1. **Data Origin Authentication**: DNSSEC allows you to verify that the DNS data you receive is indeed from the zone you think it is. For instance, when querying netflix.com, DNSSEC ensures that the response genuinely comes from Netflix's authoritative name servers.
+1. **Data Origin Authentication**: DNSSEC allows you to verify that the DNS data you receive is indeed from the zone you think it is. For instance, when querying `netflix.com`, DNSSEC ensures that the response genuinely comes from Netflix's authoritative name servers.
 
 2. **Data Integrity Protection**: DNSSEC guarantees that the DNS data hasn't been modified since it was cryptographically signed by the zone administrator. This prevents man-in-the-middle attacks where data could be altered in transit.
 
