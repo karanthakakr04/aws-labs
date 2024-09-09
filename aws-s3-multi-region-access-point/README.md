@@ -89,7 +89,6 @@ For this project, we'll be using two buckets: one in `ap-southeast-2` (Sydney) a
    - **Note:** While Mumbai may geographically be close to the center, there are a lot of network factors behind the scenes which control which region is closest.
       ![screenshot-13](https://github.com/karanthakakr04/aws-labs/assets/17943347/a993d29d-6639-46d5-bd28-eec247c20a80)
 
-
       ```bash
       dd if=/dev/urandom of=test3.file bs=1M count=10
       aws s3 cp test3.file s3://<MRAP_ARN>/
