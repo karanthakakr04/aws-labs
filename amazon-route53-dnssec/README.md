@@ -190,7 +190,7 @@ example.com.    IN  RRSIG  DNSKEY 13 2 3600 (
 )
 ```
 
-This is why it's called the Key Signing Key - its job is to sign the record containing the keys!
+This is why it's called the Key Signing Key - its job is to sign the record containing the public keys!
 
 #### Connecting to the Parent Zone
 
