@@ -157,7 +157,7 @@ example.com.    IN  DNSKEY  257 3 13 (key data...) ; KSK public key
 
 #### Creating Signatures
 
-When DNSSEC signs an RRset, it creates another new type of record called RRSIG (Resource Record Signature). Think of this as a digital signature attached to your records:
+When DNSSEC signs an RRset, it creates another new type of record called **RRSIG** (Resource Record Signature). Think of this as a digital signature attached to your records:
 
 ```plaintext
 ; Original A records (RRset)
@@ -194,11 +194,11 @@ This is why it's called the Key Signing Key - its job is to sign the record cont
 
 #### Connecting to the Parent Zone
 
-Now, how does the parent zone (.com in our example zone) know about our DNSSEC setup? This is where the DS (Delegation Signer) record comes in:
+Now, how does the parent zone (`.com` in our example) know about our DNSSEC setup? This is where the **DS** (Delegation Signer) record comes in:
 
 1. Take the KSK public key
 2. Create a hash (fingerprint) of it
-3. Give this hash to the parent zone (.com)
+3. Give this hash to the parent zone (`.com`)
 4. Parent zone publishes it as a DS record:
 
 ```plaintext
@@ -208,7 +208,7 @@ example.com.    IN  DS    12345 13 2 A69C... ; Hash of our KSK
 
 This creates a chain of trust:
 
-- .com zone vouches for our KSK (through DS record)
+- `.com` zone vouches for our KSK (through DS record)
 - Our KSK vouches for our DNSKEY record (containing ZSK)
 - Our ZSK vouches for all other records
 
@@ -221,7 +221,7 @@ When someone wants to verify our DNS records:
 3. They verify signatures using:
    - ZSK public key for regular records
    - KSK public key for the DNSKEY record
-4. They verify our KSK is trusted by checking the DS record in .com
+4. They verify our KSK is trusted by checking the DS record in `.com`
 
 This ensures that all our DNS records can be trusted and haven't been tampered with!
 
