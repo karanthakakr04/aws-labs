@@ -103,7 +103,7 @@ These are your regular DNS records that tell the internet where to find your ser
 
 #### Understanding Record Sets (RRsets)
 
-Before we add DNSSEC, we need to understand an important concept: Record Sets or RRsets. DNS records of the same type and name are grouped together into RRsets. For example:
+Before we add DNSSEC, we need to understand an important concept: **Record Sets** or **RRsets**. DNS records of the same type and name are grouped together into **RRsets**. For example:
 
 ```plaintext
 # This is one RRset (both are A records for example.com)
