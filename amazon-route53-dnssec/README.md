@@ -237,7 +237,145 @@ In the next section, we'll explore how this chain of trust works across the enti
 
 ### DNSSEC Chain of Trust
 
-Description of how DNSSEC establishes a chain of trust from the root zone down.
+After understanding how DNSSEC works within a single zone, let's explore how trust is established across the entire DNS hierarchy. Each zone in this hierarchy implements its own DNSSEC protection, and these zones connect together to form a continuous chain of trust.
+
+#### Understanding DNS Hierarchy
+
+First, let's look at how DNS is structured:
+
+```plaintext
+. (Root)
+    ↓
+.com (Top Level Domain)
+    ↓
+example.com (Domain Zone)
+```
+
+Each zone in this hierarchy:
+
+- Creates and manages its own KSK (Key Signing Key) pair
+- Creates and manages its own ZSK (Zone Signing Key) pair
+- Is responsible for signing its own DNS records
+- Provides its KSK public key's hash to the parent zone
+
+#### How Trust is Established
+
+Let's see how these separate DNSSEC-enabled zones connect together:
+
+##### 1. In Your Domain Zone (example.com)
+
+```plaintext
+; Public keys published in DNSKEY records:
+example.com.    IN  DNSKEY  257 3 13 (...) ; KSK public key
+example.com.    IN  DNSKEY  256 3 13 (...) ; ZSK public key
+
+; Regular record and its signature:
+example.com.    IN  A      192.0.2.1
+example.com.    IN  RRSIG   A 13 2 (...) ; Signed by example.com's ZSK private key
+```
+
+##### 2. In Parent Zone (.com)
+
+```plaintext
+; DS record for child zone (hash of example.com's KSK public key):
+example.com.    IN  DS     12345 13 2 A69C...
+; Signature for this DS record:
+example.com.    IN  RRSIG  DS 13 2 (...) ; Signed by .com's ZSK private key
+                                         ; Because DS record exists in .com zone
+
+; .com's public keys:
+.com.          IN  DNSKEY  257 3 13 (...) ; KSK public key
+.com.          IN  DNSKEY  256 3 13 (...) ; ZSK public key
+```
+
+##### 3. In Root Zone (.)
+
+```plaintext
+; DS record for TLD (hash of .com's KSK public key):
+com.           IN  DS     54321 13 2 B7D1...
+; Signature for this DS record:
+com.           IN  RRSIG  DS 13 2 (...) ; Signed by root's ZSK private key
+                                        ; Because DS record exists in root zone
+
+; Root's public keys:
+.              IN  DNSKEY  257 3 13 (...) ; KSK public key
+.              IN  DNSKEY  256 3 13 (...) ; ZSK public key
+```
+
+#### The Validation Flow
+
+When checking the authenticity of a DNS record, the validation process follows a top-down approach:
+
+1. **Start at the Root (Trust Anchor)**
+   - The root zone's public keys are trusted by default (something called as "Explicit Trust")
+   - These keys are built into DNS resolving software
+   - Known as "**Trust Anchors**"
+   - This gives us a trusted starting point for validation
+
+2. **Validate .com Zone**
+
+   ```plaintext
+   a. Get the DS record for .com from root zone
+   b. Get its signature (RRSIG) from root zone
+   c. Verify this signature using root's ZSK public key
+   d. If valid, we can trust .com's KSK public key
+   ```
+
+3. **Validate example.com Zone**
+
+   ```plaintext
+   a. Get the DS record for example.com from .com zone
+   b. Get its signature (RRSIG) from .com zone
+   c. Verify this signature using .com's ZSK public key
+   d. If valid, we can trust example.com's KSK public key
+   ```
+
+4. **Validate Final Records**
+
+   ```plaintext
+   a. Get the DNS record (like A record) from example.com zone
+   b. Get its signature (RRSIG) from example.com zone
+   c. Verify this signature using example.com's ZSK public key
+   d. If valid, we can trust the DNS record
+   ```
+
+#### Real-World Example
+
+When looking up `example.com`:
+
+1. **Chain of Events:**
+
+   ```plaintext
+   Root Zone (.)
+      ↓ DS record (signed by root's ZSK) proves .com's KSK is valid
+   .com Zone
+      ↓ DS record (signed by .com's ZSK) proves example.com's KSK is valid
+   example.com Zone
+      ↓ RRSIG (signed by example.com's ZSK) proves DNS records are valid
+   Final DNS Records
+   ```
+
+2. **If the Chain Breaks:**
+   - Invalid signatures
+   - Missing DS records
+   - Expired keys
+   Result: The lookup fails rather than returning unverified data
+
+#### Summary of Key Concepts
+
+1. Each zone manages its own set of keys (KSK and ZSK pairs)
+2. DS records exist in parent zones, not in the zone they describe
+3. DS records are always signed by the parent zone's ZSK private key
+4. The validation process starts from a trusted root and works down
+5. Every link in the chain must be valid for DNSSEC to work
+
+#### Why This Matters
+
+This chain ensures that:
+
+1. Each connection between zones is cryptographically verified
+2. DNS data cannot be tampered with at any point in the hierarchy
+3. Users can trust they're reaching the intended destination
 
 ### DNSSEC Root Signing Ceremony
 
