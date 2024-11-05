@@ -532,7 +532,10 @@ In the next section, we'll look at how to implement DNSSEC for your own domain u
 
 ### Prerequisites
 
-List of required AWS services, permissions, and any necessary setup.
+- An AWS account with Route 53 access
+- A domain registered and hosted in Route 53 
+- Required permissions for Route 53 and KMS services
+- The domain must be in US East (N. Virginia) Region
 
 ### Step-by-step Guide
 
