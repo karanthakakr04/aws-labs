@@ -574,10 +574,6 @@ In the next section, we'll look at how to implement DNSSEC for your own domain u
 
 Steps to verify that DNSSEC is working correctly after implementation.
 
-## Troubleshooting
-
-Common issues and their solutions.
-
 ## Additional Resources
 
 Links to official documentation, helpful articles, and videos (including Adrian Cantrill's series).
