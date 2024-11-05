@@ -594,4 +594,5 @@ dig <your-domain> NS
 
 ## Additional Resources
 
-Links to official documentation, helpful articles, and videos (including Adrian Cantrill's series).
+[Configuring DNSSEC signing in Amazon Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-configuring-dnssec.html)
+[Configuring DNSSEC for a domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-configure-dnssec.html)
