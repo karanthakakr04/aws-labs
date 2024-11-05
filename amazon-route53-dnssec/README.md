@@ -574,11 +574,22 @@ In the next section, we'll look at how to implement DNSSEC for your own domain u
 
 Use the following DNS lookup commands to verify:
 
+Windows commands:
+
 ```bash
 nslookup -type=DS <your-domain> <name-server>
 nslookup -type=A <your-domain>
 nslookup -type=SOA <your-domain>
 nslookup -type=NS <your-domain>
+```
+
+Linux commands:
+
+```bash
+dig <your-domain> DS @<name-server>
+dig <your-domain> A
+dig <your-domain> SOA
+dig <your-domain> NS
 ```
 
 ## Additional Resources
