@@ -539,7 +539,36 @@ In the next section, we'll look at how to implement DNSSEC for your own domain u
 
 ### Step-by-step Guide
 
-Detailed instructions for implementing DNSSEC using Route53.
+#### 1. Enable DNSSEC Signing & Create KSK
+
+1. Go to Route 53 Console
+2. Select your hosted zone
+3. Navigate to the "DNSSEC signing" tab
+4. Click "Enable DNSSEC signing"
+5. In the Key-signing key (KSK) creation section:
+   - Choose "Create new KSK"
+   - Enter a KSK name
+   - Under Customer managed CMK, enter an alias for a new customer managed key
+   - Route 53 will create both the KSK and CMK for you
+6. Click "Enable DNSSEC signing"
+
+#### 2. Create DS Record
+
+1. On the DNSSEC signing tab, click "View information to create DS record"
+2. For Route 53 registrar:
+   - Go to "Registered domains"
+   - Select your domain
+   - Next to DNSSEC status, click "Manage keys"
+   - Choose appropriate Key type and Algorithm
+   - Copy and paste the Public key
+   - Add the key
+
+#### 3. Monitor DNSSEC Status
+
+- Setup CloudWatch alarms for:
+  - DNSSECInternalFailure
+  - DNSSECKeySigningKeysNeedingAction
+- Monitor hosted zone for proper DNSSEC implementation
 
 ### Verification
 
