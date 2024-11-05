@@ -572,16 +572,15 @@ In the next section, we'll look at how to implement DNSSEC for your own domain u
 
 ### Verification
 
-Steps to verify that DNSSEC is working correctly after implementation.
+Use the following DNS lookup commands to verify:
+
+```bash
+nslookup -type=DS <your-domain> <name-server>
+nslookup -type=A <your-domain>
+nslookup -type=SOA <your-domain>
+nslookup -type=NS <your-domain>
+```
 
 ## Additional Resources
 
 Links to official documentation, helpful articles, and videos (including Adrian Cantrill's series).
-
-## Contributing
-
-Guidelines for contributing to the project.
-
-## License
-
-License information for the project.
