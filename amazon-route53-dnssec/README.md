@@ -12,10 +12,7 @@
    - [Prerequisites](#prerequisites)
    - [Step-by-step Guide](#step-by-step-guide)
    - [Verification](#verification)
-5. [Troubleshooting](#troubleshooting)
-6. [Additional Resources](#additional-resources)
-7. [Contributing](#contributing)
-8. [License](#license)
+5. [Additional Resources](#additional-resources)
 
 ## Introduction
 
